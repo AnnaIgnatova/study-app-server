@@ -1,5 +1,6 @@
-const { authJwt } = require('../../middleware');
+const { verifySignUp } = require('../../middleware');
 const controller = require('../controllers/user.controller');
+
 module.exports = function (app) {
   app.use(function (req, res, next) {
     res.header(
@@ -8,7 +9,10 @@ module.exports = function (app) {
     );
     next();
   });
-  app.get('/api/user/:id', controller.getUserById);
-  app.post('/api/user/:id', controller.changeUserData);
-  // app.get('/api/test/user', [authJwt.verifyToken], controller.userBoard);
+  app.post(
+    '/api/auth/signup',
+    [verifySignUp.checkDuplicateUsernameOrEmail],
+    controller.signup
+  );
+  app.post('/api/auth/signin', controller.signin);
 };

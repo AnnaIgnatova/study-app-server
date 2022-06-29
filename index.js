@@ -44,8 +44,10 @@ const db = require('./app/models');
 // });
 
 //Routes
-require('./app/routes/users.routes')(app, passport);
-require('./config/passport/passport.js')(passport, db.users);
+// require('./app/routes/auth.routes')(app, passport);
+// require('./config/passport/passport.js')(passport, db.users);
+require('./app/routes/auth.routes')(app);
+require('./app/routes/users.routes')(app);
 
 db.sequelize.sync().then(() => {
   console.log('Drop and re-sync db.');
